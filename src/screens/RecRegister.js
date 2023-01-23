@@ -71,10 +71,10 @@ const RecRegister = ({ navigation }) => {
                 "Content-Type": "multipart/form-data",
             };
 
-            axios.post('https://1de6-41-186-143-119.eu.ngrok.io/register/', postObj).then((res) => {
+            axios.post('https://1552-41-186-143-119.eu.ngrok.io/register_recipient/', postObj).then((res) => {
                 if (res.data.code == 200) {
                     alert('Registered succesfully')
-                    navigation.navigate('Home')
+                    navigation.navigate('Dashboard')
                 }
                 else {
                     alert('Phone Number or email already taken')

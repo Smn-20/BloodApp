@@ -13,6 +13,7 @@ import axios from 'axios';
 import { Dashboard } from '../screens/Dashboard';
 import Donors from '../screens/Donors';
 import Recipients from '../screens/Recipients';
+import { RecDashboard } from '../screens/RecDashboard';
 //SCREENS
 
 
@@ -71,7 +72,7 @@ const HomeStackNavigator = (props) => {
            
 
 
-            await axios.post("https://1de6-41-186-143-119.eu.ngrok.io/user_login/", postObj)
+            await axios.post("https://1552-41-186-143-119.eu.ngrok.io/user_login/", postObj)
             .then(res => {
                 
               if (res.data.status === 'success') {
@@ -163,18 +164,18 @@ const HomeStackNavigator = (props) => {
                      <Stack.Screen name="Dashboard" component={Dashboard} />
                      <Stack.Screen name="Donors" component={Donors} />
                      <Stack.Screen name="Recipients" component={Recipients} />
-                     
+                     <Stack.Screen name="RecRegister" component={RecRegister} />
                  </Stack.Navigator>
                  </AuthContext.Provider>
          
              );
         }
-        else{
+        else if(loginState.redirect_page==='Recipient'){
             return (
                 <AuthContext.Provider value={authContext}>
                  <Stack.Navigator screenOptions={screenOptionStyle} >
                      
-                     <Stack.Screen name="Dashboard" component={Dashboard} />
+                     <Stack.Screen name="RecDashboard" component={RecDashboard} />
          
                      {/* MANAGER */}
          
@@ -194,7 +195,7 @@ const HomeStackNavigator = (props) => {
             <Stack.Navigator screenOptions={screenOptionStyle} >
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Register" component={Register} />
-                <Stack.Screen name="RecRegister" component={RecRegister} />
+                
             </Stack.Navigator>
             </AuthContext.Provider>
           )
