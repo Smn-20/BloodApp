@@ -107,7 +107,7 @@ const Login = ({ navigation }) => {
                 </View>
 
                 <TouchableOpacity onPress={() => { navigation.navigate('Register') }}>
-                    <Text style={styles.forgotpass}>Register here</Text>
+                    <Text style={styles.forgotpass}>Are you a donor? Register here</Text>
                 </TouchableOpacity>
 
                 <View style={{ marginTop: 30 }}>
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
         resizeMode: "contain"
     },
     forgotpass: {
-        color: "#000000",
+        color: "#14213d",
         fontSize: 14,
         marginLeft: 20,
         marginTop: 10
