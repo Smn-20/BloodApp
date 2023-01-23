@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     View,
     Text,
@@ -21,7 +21,7 @@ import { MaterialIcons, AntDesign, EvilIcons, FontAwesome, Ionicons, Feather, En
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
-const Recipients = ({ navigation }) => {
+const Requests = ({ navigation }) => {
 
     const [securetext, setsecuretext] = useState(true)
     const [loading, setloading] = useState('')
@@ -112,50 +112,46 @@ const Recipients = ({ navigation }) => {
 
             <StatusBar barStyle='dark-content' backgroundColor="#000000" hidden={false} translucent={true} />
 
-                <View style={{ marginTop: 20, alignItems: "center", flexDirection: "row",backgroundColor:'red',paddingBottom:20 }}>
-                    <TouchableOpacity style={{ width: "15%", alignItems: "flex-end", marginTop: 10, marginLeft: -20 }}
-                        onPress={() => navigation.goBack()}>
-                            <Ionicons name="arrow-back" size={30} color="#fff" />
-                    </TouchableOpacity>
-                    
-                    <View style={{ width: "75%",alignItems:"center"}}>
-                        <Text style={{ fontWeight: "bold", marginTop: 10, fontSize: 20,color:'white' }}>Recipients
-                        </Text>
-                    </View>
+            <View style={{ marginTop: 20, alignItems: "center", flexDirection: "row", backgroundColor: 'red', paddingBottom: 20 }}>
+                <TouchableOpacity style={{ width: "15%", alignItems: "flex-end", marginTop: 10, marginLeft: -20 }}
+                    onPress={() => navigation.goBack()}>
+                    <Ionicons name="arrow-back" size={30} color="#fff" />
+                </TouchableOpacity>
 
-                    <TouchableOpacity style={{ width: "10%", justifyContent: "flex-start", marginTop: 10 }}
+                <View style={{ width: "75%", alignItems: "center" }}>
+                    <Text style={{ fontWeight: "bold", marginTop: 10, fontSize: 20, color: 'white' }}>Requests
+                    </Text>
+                </View>
+
+                {/* <TouchableOpacity style={{ width: "10%", justifyContent: "flex-start", marginTop: 10 }}
                         onPress={() => navigation.navigate('RecRegister')}>
                             <Icon name="plus" size={30} color="#fff" />
-                    </TouchableOpacity>
-                </View>
+                    </TouchableOpacity> */}
+            </View>
 
-                <ScrollView>
-                <View style={{flexDirection:'row',justifyContent:'space-around'}}>
-                <View  style={{flexDirection:'row',width:'80%', height: 130, backgroundColor: '#E0E0E0',  position: 'relative', margin: 10,  borderRadius: 8 }}>
-                    <View style={{padding:20,width:'52%'}}>
-                        <Text>Urbain Mutangana</Text>
-                        <Text style={{marginTop:8,fontSize:18,fontWeight: "bold"}}>Blood type: A+</Text>
-                        <Text style={{marginTop:8,fontSize:16}}>Address: Kigali</Text>
+            <ScrollView>
+                <TouchableOpacity  onPress={() => navigation.navigate('Donate')} style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                    <View style={{ flexDirection: 'row', height: 130, backgroundColor: '#E0E0E0', position: 'relative', margin: 10, borderRadius: 8 }}>
+                        <View style={{ padding: 20, width: '80%' }}>
+                            <Text style={{ marginTop: 8, fontSize: 18, fontWeight: "bold" }}>CHUK</Text>
+                            <Text style={{ marginTop: 8, fontSize: 16, fontWeight: "bold" }}>Blood type: A+</Text>
+                            <Text style={{ marginTop: 8, fontSize: 16 }}>30 Littres</Text>
+                        </View>
+                        <View style={{ padding: 20, width: '20%', }}>
+                            <TouchableOpacity style={{ justifyContent: "center", marginTop: 30 }}>
+                                <MaterialIcons name="arrow-forward-ios" size={24} color="black" />
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={{padding:20,width:'48%',}}>
-                    <Text>Age:30</Text>
-                    <Text style={{marginTop:8,}}><Icon
-                        name="phone"
-                        color="red"
-                        size={20}
-                        style={[styles.icon, { marginLeft: 10 }]}
-                    /> 0781269507</Text>
-                    </View>
-                </View>
-                </View>
-                </ScrollView>
+                </TouchableOpacity>
+            </ScrollView>
 
         </>
     );
 };
 
 
-export default Recipients;
+export default Requests;
 
 const styles = StyleSheet.create({
 
