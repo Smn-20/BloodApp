@@ -10,6 +10,8 @@ import { AuthContext } from '../context/Context';
 import axios from 'axios';
 import Register from '../screens/Register';
 import { Dashboard } from '../screens/Dashboard';
+import Donors from '../screens/Donors';
+import Recipients from '../screens/Recipients';
 //SCREENS
 
 
@@ -158,6 +160,8 @@ const HomeStackNavigator = (props) => {
                      
                      {/* Tenant */}
                      <Stack.Screen name="Dashboard" component={Dashboard} />
+                     <Stack.Screen name="Donors" component={Donors} />
+                     <Stack.Screen name="Recipients" component={Recipients} />
                      
                  </Stack.Navigator>
                  </AuthContext.Provider>
