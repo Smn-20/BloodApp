@@ -21,7 +21,7 @@ import { MaterialIcons, AntDesign, EvilIcons, FontAwesome, Ionicons, Feather, En
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
-const Register = ({ navigation }) => {
+const RecRegister = ({ navigation }) => {
 
     const [securetext, setsecuretext] = useState(true)
     const [loading, setloading] = useState('')
@@ -29,17 +29,11 @@ const Register = ({ navigation }) => {
         setsecuretext(!securetext)
     }
     const [FirstName, setFirstName] = useState('')
-    const [LastName, setLastName] = useState('')
     const [Place, setPlace] = useState('')
-    const [Btype, setBtype] = useState('')
-    const [typee, settypee] = useState('Donor')
+    const [typee, settypee] = useState('Recipient')
     const [phone, setphone] = useState('')
     const [email, setemail] = useState('')
     const [Password, setPassword] = useState(null)
-    const [year, setYear] = useState(JSON.stringify(new Date().getFullYear()))
-    const [month, setMonth] = useState('01')
-    const [days, setdays] = useState('01')
-
 
 
     const addDigit = (num) => {
@@ -56,9 +50,6 @@ const Register = ({ navigation }) => {
         if (FirstName.length < 2) {
             alert('Please Enter first Name');
         }
-        else if (LastName.length < 2) {
-            alert('Please Enter Last Name');
-        }
         else if (phone.length < 10) {
             alert('Please Enter phone');
         }
@@ -66,9 +57,6 @@ const Register = ({ navigation }) => {
             e.preventDefault()
             const postObj = new FormData();
             postObj.append('FirstName', FirstName)
-            postObj.append('LastName', LastName)
-            postObj.append('DOB', year + '-' + month + '-' + days)
-            postObj.append('Btype', Btype)
             postObj.append('Place', Place)
             postObj.append('typee', typee)
             postObj.append('email', email)
@@ -85,8 +73,8 @@ const Register = ({ navigation }) => {
 
             axios.post('https://1de6-41-186-143-119.eu.ngrok.io/register/', postObj).then((res) => {
                 if (res.data.code == 200) {
-                    alert('Your are succesfully register Please login with you credentials')
-                    navigation.navigate('Login')
+                    alert('Registered succesfully')
+                    navigation.navigate('Home')
                 }
                 else {
                     alert('Phone Number or email already taken')
@@ -118,14 +106,14 @@ const Register = ({ navigation }) => {
                     </TouchableOpacity>
                     
                     <View style={{ width: "80%",alignItems:"center"}}>
-                        <Text style={{ fontWeight: "bold", marginTop: 10, fontSize: 20,color:'white' }}>Register as donor</Text>
+                        <Text style={{ fontWeight: "bold", marginTop: 10, fontSize: 20,color:'white' }}>Register Recipient</Text>
                     </View>
                 </View>
 
                 <ScrollView>
                     <View style={styles.Formcontainer}>
                         <TextInput
-                            placeholder="First Name"
+                            placeholder="Receipt Name"
                             placeholderTextColor="#666666"
                             style={styles.textInput}
                             autoCapitalize="none"
@@ -134,100 +122,7 @@ const Register = ({ navigation }) => {
                     </View>
                     <View style={styles.Formcontainer}>
                         <TextInput
-                            placeholder="Last Name"
-                            placeholderTextColor="#666666"
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={text => setLastName(text)}
-                        />
-                    </View>
-
-                    <Text style={{ marginTop: 3, fontSize: 14, marginLeft: 25 }}>Date of Birth</Text>
-                    <View style={{ flexDirection: "row", marginHorizontal: 15 }}>
-                        <View
-                            style={{
-                                width: '33%',
-                                marginTop: 0,
-                                borderColor: 'black',
-                                borderRadius: 10,
-                            }}>
-
-                            <Picker
-                                selectedValue={year}
-                                onValueChange={(val) => { setYear(val) }}>
-                                <Picker.Item label={JSON.stringify(new Date().getFullYear() - 18)} value={JSON.stringify(new Date().getFullYear() - 18)} />
-                                <Picker.Item label={JSON.stringify(new Date().getFullYear() - 19)} value={JSON.stringify(new Date().getFullYear() - 19)} />
-                                <Picker.Item label={JSON.stringify(new Date().getFullYear() - 20)} value={JSON.stringify(new Date().getFullYear() - 20)} />
-
-                            </Picker>
-                        </View>
-                        <View
-                            style={{
-                                width: '33%',
-                                marginTop: 0,
-                                borderColor: 'black',
-                                borderRadius: 10,
-                            }}>
-                            <Picker
-                                selectedValue={month}
-                                onValueChange={(val) => { setMonth(val) }}>
-                                <Picker.Item value="01" label="January" />
-                                <Picker.Item value="02" label="February" />
-                                <Picker.Item value="03" label="March" />
-                                <Picker.Item value="04" label="April" />
-                                <Picker.Item value="05" label="May" />
-                                <Picker.Item value="06" label="June" />
-                                <Picker.Item value="07" label="July" />
-                                <Picker.Item value="07" label="August" />
-                                <Picker.Item value="08" label="September" />
-                                <Picker.Item value="10" label="October" />
-                                <Picker.Item value="11" label="November" />
-                                <Picker.Item value="12" label="December" />
-
-                            </Picker>
-                        </View>
-                        <View
-                            style={{
-                                width: '33%',
-                                marginTop: 0,
-                                borderColor: 'black',
-                                borderRadius: 10,
-
-                            }}>
-                            <Picker
-                                selectedValue={days}
-                                onValueChange={(val) => { setdays(val) }}>
-                                {Array.from({ length: 31 }, (_, index) => index + 1).map((element) => {
-                                    return (
-                                        <Picker.Item label={addDigit(element)} value={addDigit(element)} />
-                                    )
-                                })}
-                            </Picker>
-                        </View>
-                    </View>
-                    <Text style={{ marginTop: 10,marginBottom:-80, fontSize: 14, marginLeft: 25 }}>Blood type</Text>
-                    <View
-                            style={{
-                                marginTop: 0,
-                                borderColor: 'black',
-                                borderRadius: 10,
-                            }}>
-                            <Picker
-                                onValueChange={(val) => { setBtype(val) }}>
-                                <Picker.Item value="A+" label="A+" />
-                                <Picker.Item value="A-" label="A-" />
-                                <Picker.Item value="B+" label="B+" />
-                                <Picker.Item value="B-" label="B-" />
-                                <Picker.Item value="AB+" label="AB+" />
-                                <Picker.Item value="AB-" label="AB-" />
-                                <Picker.Item value="O+" label="O+" />
-                                <Picker.Item value="O-" label="O-" />
-
-                            </Picker>
-                        </View>
-                    <View style={styles.Formcontainer}>
-                        <TextInput
-                            placeholder="Where do you live"
+                            placeholder="Address"
                             placeholderTextColor="#666666"
                             style={styles.textInput}
                             autoCapitalize="none"
@@ -311,7 +206,7 @@ const Register = ({ navigation }) => {
 };
 
 
-export default Register;
+export default RecRegister;
 
 const styles = StyleSheet.create({
 

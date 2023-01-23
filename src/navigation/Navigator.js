@@ -6,9 +6,10 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Login from '../screens/Login';
+import Register from '../screens/Register';
+import RecRegister from '../screens/RecRegister';
 import { AuthContext } from '../context/Context';
 import axios from 'axios';
-import Register from '../screens/Register';
 import { Dashboard } from '../screens/Dashboard';
 //SCREENS
 
@@ -68,7 +69,7 @@ const HomeStackNavigator = (props) => {
            
 
 
-            await axios.post("https://343a-41-186-143-119.eu.ngrok.io/user_login/", postObj)
+            await axios.post("https://1de6-41-186-143-119.eu.ngrok.io/user_login/", postObj)
             .then(res => {
                 
               if (res.data.status === 'success') {
@@ -189,6 +190,7 @@ const HomeStackNavigator = (props) => {
             <Stack.Navigator screenOptions={screenOptionStyle} >
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Register" component={Register} />
+                <Stack.Screen name="RecRegister" component={RecRegister} />
             </Stack.Navigator>
             </AuthContext.Provider>
           )
