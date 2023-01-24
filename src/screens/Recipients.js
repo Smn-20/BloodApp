@@ -30,7 +30,7 @@ const Recipients = ({ navigation }) => {
           headers: { Authorization: `Token ${my_token}` }
       };     
    
-        axios.get('https://0315-41-186-143-119.eu.ngrok.io/Allusers/',
+        axios.get('https://8f90-41-186-143-119.eu.ngrok.io/Allusers/',
         config).then(response => {
           setUsers(response.data);
         
