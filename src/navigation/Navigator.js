@@ -202,6 +202,29 @@ const HomeStackNavigator = (props) => {
 
                 );
             }
+            else if (loginState.redirect_page === 'Donor') {
+                return (
+                    <AuthContext.Provider value={authContext}>
+                        <Stack.Navigator screenOptions={screenOptionStyle} >
+
+                            <Stack.Screen name="Donor" component={Donor} />
+                            <Stack.Screen name="Settings" component={Settings} />
+                            {/* <Stack.Screen name="Donors" component={Donors} />
+                            <Stack.Screen name="Recipients" component={Recipients} />
+                            <Stack.Screen name="RecRegister" component={RecRegister} />
+                            <Stack.Screen name="Requests" component={Requests} />
+                            <Stack.Screen name="Donate" component={Donate} />
+                            <Stack.Screen name="Donor" component={Donor} /> */}
+                            {/* MANAGER */}
+
+
+
+
+                        </Stack.Navigator>
+                    </AuthContext.Provider>
+
+                );
+            }
 
         }
         else {

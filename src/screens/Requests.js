@@ -69,7 +69,7 @@ const Requests = ({ navigation }) => {
             <ScrollView>
             {requests.length>0?(
                     requests.map(request=>{return(
-                <TouchableOpacity  onPress={() => navigation.navigate('Donate')} style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                <TouchableOpacity  onPress={() => navigation.navigate('Donate',{'request':request})} style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                     <View style={{ flexDirection: 'row', height: 130, backgroundColor: '#E0E0E0', position: 'relative', margin: 10, borderRadius: 8 }}>
                         <View style={{ padding: 20, width: '80%' }}>
                             <Text style={{ marginTop: 8, fontSize: 18, fontWeight: "bold" }}>{request.user.FirstName}</Text>

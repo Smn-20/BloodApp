@@ -21,59 +21,63 @@ import { MaterialIcons, AntDesign, EvilIcons, FontAwesome, Ionicons, Feather, En
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
-const Donate = ({ navigation }) => {
+const Donate = ({ navigation,route }) => {
 
     const [Quantity, setQuantity] = useState(null)
     const [myID, setMyID] = useState('')
     const [Donor, setDonor] = useState('')
     const [loading, setLoading] = useState(false)
+    const [users,setUsers]=useState([])
 
+    const fetch_data = async () => {
+        let my_token =  await AsyncStorage.getItem('token')
+        const config = {
+          headers: { Authorization: `Token ${my_token}` }
+      };     
+   
+        axios.get('https://0315-41-186-143-119.eu.ngrok.io/Allusers/',
+        config).then(response => {
+          setUsers(response.data);
+        
+        });
+      }
 
-    useEffect(() => {
-        async function setInfo() {
+      useEffect(()=>{
+        
+          fetch_data();
+      },[])
 
-            const id = await AsyncStorage.getItem('user_id')
-            setMyID(id)
-            axios.get(`https://ecf6-154-68-126-67.eu.ngrok.io/GetDonorbyId/${id}`).then((res) => {
-                setbreeder(res.data[0])
-            })
-              .catch(err => {
-                console.log(err)
-            })
-
-        }
-
-        setInfo()
-
-    }, [])
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        const postObj = new FormData();
-        postObj.append('user', myID)
-        postObj.append('Quantity', Quantity)
-        postObj.append('Donor', Donor)
+        const postObj = JSON.stringify({
+            'request': route.params.request.id,
+            'quantity': Quantity,
+            'donor': Donor,
+         
+          })
+      
+       
         console.log(postObj)
 
-        // let my_token = localStorage.getItem('token');
+        let my_token =  await AsyncStorage.getItem('token')
 
         axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
         axios.defaults.xsrfCookieName = "csrftoken";
         axios.defaults.headers = {
             "Content-Type": "application/json",
-            // Authorization: `Token ${my_token}`,
+            Authorization: `Token ${my_token}`,
         };
 
-        axios.post('https://ecf6-154-68-126-67.eu.ngrok.io/CreateCase/', postObj).then((res) => {
+        axios.post('https://0315-41-186-143-119.eu.ngrok.io/CreateDonation/', postObj).then((res) => {
             console.log(res.status)
-            alert("Succesfully")
+            alert("Donation successfull")
             navigation.navigate('Requests')
         })
         .then((res) => {
           console.log(res)
         })
         .catch(err => {
-            console.log(err)
+            alert('something went wrong')
         })
 
         setTimeout(() => {
@@ -98,7 +102,7 @@ const Donate = ({ navigation }) => {
                     </TouchableOpacity>
                     
                     <View style={{ width: "80%",alignItems:"center"}}>
-                        <Text style={{ fontWeight: "bold", marginTop: 10, fontSize: 20,color:'white' }}>CHUK Requests</Text>
+                        <Text style={{ fontWeight: "bold", marginTop: 10, fontSize: 20,color:'white' }}>{route.params.request.user.FirstName} Request</Text>
                     </View>
                 </View>
 
@@ -113,8 +117,10 @@ const Donate = ({ navigation }) => {
                                 }}
                                 selectedValue={Donor}
                                 onValueChange={(val) => { setDonor(val) }}>
-                                <Picker.Item label="Simon Rusekeza" value="id" />
-                                <Picker.Item label="Donor 2" value="id" />
+                                    <Picker.Item label="Select donor" value="" />
+                                    {users.filter(element => element.typee=="Donor").map(user=>{return(
+                                <Picker.Item label={user.FirstName+" "+user.LastName} value={user.id} />
+                                    )})}
                             </Picker>
                         </View>
                     <View style={styles.Formcontainer}>

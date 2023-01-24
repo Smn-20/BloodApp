@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import {
     View,
     Text,
@@ -10,9 +10,28 @@ import {
     StatusBar
 
 } from "react-native";
+import axios from 'axios';
 import { MaterialIcons, AntDesign, EvilIcons, FontAwesome, Ionicons, Feather, Entypo, SimpleLineIcons } from "@expo/vector-icons";
 
 export const Donor = ({ navigation }) => {
+    const [users,setUsers]=useState([])
+    const fetch_data = async () => {
+        let my_token =  await AsyncStorage.getItem('token')
+        const config = {
+          headers: { Authorization: `Token ${my_token}` }
+      };     
+   
+        axios.get('https://0315-41-186-143-119.eu.ngrok.io/Allusers/',
+        config).then(response => {
+          setUsers(response.data);
+        
+        });
+      }
+
+      useEffect(()=>{
+        
+          fetch_data();
+      },[])
     return (
         <View>
             <StatusBar barStyle='dark-content' backgroundColor="red" hidden={false} translucent={true} />
@@ -22,9 +41,13 @@ export const Donor = ({ navigation }) => {
                     <Ionicons name="menu" size={30} color="#fff" />
                 </TouchableOpacity>
 
-                <View style={{ width: "85%", alignItems: "center" }}>
-                    <Text style={{ fontWeight: "bold", marginTop: 10, fontSize: 20, color: 'white' }}>FirstName LastName</Text>
+                <View style={{ width: "75%", alignItems: "center" }}>
+                    <Text style={{ fontWeight: "bold", marginTop: 10, fontSize: 20, color: 'white' }}>My Dashboard</Text>
                 </View>
+                <TouchableOpacity style={{ width: "10%", justifyContent: "flex-start", marginTop: 10 }}
+                        onPress={() => navigation.navigate('Settings')}>
+                           <FontAwesome name="user-circle-o" size={30} color="#fff" />
+                    </TouchableOpacity>
             </View>
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>

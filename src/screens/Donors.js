@@ -38,6 +38,7 @@ const Donors = ({ navigation }) => {
       }
 
       useEffect(()=>{
+          
           fetch_data();
       },[])
 
@@ -66,9 +67,9 @@ const Donors = ({ navigation }) => {
                         <View style={{flexDirection:'row',justifyContent:'space-around'}}>
                 <View  style={{flexDirection:'row',width:'95%', height: 120, backgroundColor: '#E0E0E0',  position: 'relative', margin: 10,  borderRadius: 8 }}>
                     <View style={{padding:20,width:'60%'}}>
-                        <Text>Urbain Mutangana</Text>
-                        <Text style={{marginTop:8,fontSize:18,fontWeight: "bold"}}>Blood type: A+</Text>
-                        <Text style={{marginTop:8,fontSize:16}}>Address: Kigali</Text>
+                        <Text>{user.FirstName} {user.LastName}</Text>
+                        <Text style={{marginTop:8,fontSize:18,fontWeight: "bold"}}>Blood type: {user.Btype}</Text>
+                        <Text style={{marginTop:8,fontSize:16}}>Address: {user.Place}</Text>
                     </View>
                     <View style={{padding:20,width:'40%',}}>
                     <Text>Age:30</Text>
@@ -77,7 +78,7 @@ const Donors = ({ navigation }) => {
                         color="red"
                         size={20}
                         style={[styles.icon, { marginLeft: 10 }]}
-                    /> 0781269507</Text>
+                    /> {user.phone}</Text>
                     </View>
                 </View>
                 </View>

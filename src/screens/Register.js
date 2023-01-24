@@ -106,7 +106,7 @@ const Register = ({ navigation }) => {
     return (
         // onPress={() => navigation.goBack()}
         <>
-
+          
 
             <StatusBar barStyle='dark-content' backgroundColor="#000000" hidden={false} translucent={true} />
             <KeyboardAvoidingView style={styles.container} behavior='position'>
