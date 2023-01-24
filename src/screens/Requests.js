@@ -23,86 +23,23 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Requests = ({ navigation }) => {
 
-    const [securetext, setsecuretext] = useState(true)
-    const [loading, setloading] = useState('')
-    const updateSecureTextEntry = () => {
-        setsecuretext(!securetext)
-    }
-    const [FirstName, setFirstName] = useState('')
-    const [LastName, setLastName] = useState('')
-    const [MName, setMName] = useState('')
-    const [FName, setFName] = useState('')
-    const [phone, setphone] = useState('')
-    const [email, setemail] = useState('')
-    const [Weight, setWeight] = useState('')
-    const [Height, setHeight] = useState('')
-    const [Password, setPassword] = useState(null)
-    const [year, setYear] = useState(JSON.stringify(new Date().getFullYear()))
-    const [month, setMonth] = useState('01')
-    const [days, setdays] = useState('01')
+    const [requests,setRequests]=useState([])
+    const fetch_data = async () => {
+        let my_token =  await AsyncStorage.getItem('token')
+        const config = {
+          headers: { Authorization: `Token ${my_token}` }
+      };     
+   
+        axios.get('https://0315-41-186-143-119.eu.ngrok.io/Allrequest/',
+        config).then(response => {
+            setRequests(response.data);
+        
+        });
+      }
 
-
-
-    const addDigit = (num) => {
-        if (JSON.stringify(num).length > 1) {
-            return JSON.stringify(num)
-        }
-        else {
-            return '0' + num
-        }
-    }
-
-    const handleSubmit = (e) => {
-        setloading(true)
-        if (FirstName.length < 2) {
-            alert('Please Enter first Name');
-        }
-        else if (LastName.length < 2) {
-            alert('Please Enter Last Name');
-        }
-        else if (phone.length < 10) {
-            alert('Please Enter phone');
-        }
-        else {
-            e.preventDefault()
-            const postObj = new FormData();
-            postObj.append('FirstName', FirstName)
-            postObj.append('LastName', LastName)
-            postObj.append('MName', MName)
-            postObj.append('FName', FName)
-            postObj.append('phone', phone)
-            postObj.append('DOB', year + '-' + month + '-' + days)
-            postObj.append('email', email)
-            postObj.append('Weight', Weight)
-            postObj.append('Height', Height)
-            postObj.append('password', Password)
-            console.log(postObj)
-
-
-            axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-            axios.defaults.xsrfCookieName = "csrftoken";
-            axios.defaults.headers = {
-                "Content-Type": "multipart/form-data",
-            };
-
-            axios.post('https://8e78-41-186-143-119.eu.ngrok.io/register/', postObj).then((res) => {
-                if (res.data.code == 200) {
-                    alert('Your are succesfully register Please login with you credentials')
-                    navigation.navigate('Login')
-                }
-                else {
-                    alert('Phone Number or email already taken')
-                }
-
-            }).catch(err => {
-                console.log(err)
-            })
-
-            setTimeout(() => {
-                setloading(false)
-            }, 5000)
-        }
-    }
+      useEffect(()=>{
+          fetch_data();
+      },[])
 
 
     return (
@@ -130,12 +67,14 @@ const Requests = ({ navigation }) => {
             </View>
 
             <ScrollView>
+            {requests.length>0?(
+                    requests.map(request=>{return(
                 <TouchableOpacity  onPress={() => navigation.navigate('Donate')} style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                     <View style={{ flexDirection: 'row', height: 130, backgroundColor: '#E0E0E0', position: 'relative', margin: 10, borderRadius: 8 }}>
                         <View style={{ padding: 20, width: '80%' }}>
-                            <Text style={{ marginTop: 8, fontSize: 18, fontWeight: "bold" }}>CHUK</Text>
-                            <Text style={{ marginTop: 8, fontSize: 16, fontWeight: "bold" }}>Blood type: A+</Text>
-                            <Text style={{ marginTop: 8, fontSize: 16 }}>30 Littres</Text>
+                            <Text style={{ marginTop: 8, fontSize: 18, fontWeight: "bold" }}>{request.user.FirstName}</Text>
+                            <Text style={{ marginTop: 8, fontSize: 16, fontWeight: "bold" }}>Blood type: {request.Btype}</Text>
+                            <Text style={{ marginTop: 8, fontSize: 16 }}>quantity:{request.quantity}</Text>
                         </View>
                         <View style={{ padding: 20, width: '20%', }}>
                             <TouchableOpacity style={{ justifyContent: "center", marginTop: 30 }}>
@@ -144,6 +83,12 @@ const Requests = ({ navigation }) => {
                         </View>
                     </View>
                 </TouchableOpacity>
+                )})
+                ):(
+                    <View style={{alignItems:'center',justifyContent:'center',marginTop:50}}>
+                        <Text style={{fontSize:20}}>No Request</Text>
+                    </View>
+                )}
             </ScrollView>
 
         </>

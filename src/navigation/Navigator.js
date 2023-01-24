@@ -76,7 +76,7 @@ const HomeStackNavigator = (props) => {
 
 
 
-            await axios.post("https://54aa-41-186-194-186.eu.ngrok.io/user_login/", postObj)
+            await axios.post("https://0315-41-186-143-119.eu.ngrok.io/user_login/", postObj)
                 .then(res => {
 
                     if (res.data.status === 'success') {

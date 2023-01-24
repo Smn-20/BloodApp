@@ -16,15 +16,22 @@ import { MaterialIcons, AntDesign, EvilIcons, FontAwesome, Ionicons, Feather, En
 
 export const Dashboard = ({ navigation }) => {
     const [users,setUsers]=useState([])
+    const [requests,setRequests]=useState([])
     const fetch_data = async () => {
         let my_token =  await AsyncStorage.getItem('token')
         const config = {
           headers: { Authorization: `Token ${my_token}` }
       };     
    
-        axios.get('https://54aa-41-186-194-186.eu.ngrok.io/Allusers/',
+        axios.get('https://0315-41-186-143-119.eu.ngrok.io/Allusers/',
         config).then(response => {
           setUsers(response.data);
+        
+        });
+
+        axios.get('https://0315-41-186-143-119.eu.ngrok.io/Allrequest/',
+        config).then(response => {
+            setRequests(response.data);
         
         });
       }
@@ -86,7 +93,7 @@ export const Dashboard = ({ navigation }) => {
                 <View style={{ flexDirection: 'row', width: '80%', height: 120, backgroundColor: '#E0E0E0', position: 'relative', margin: 10, borderRadius: 8 }}>
                     <View style={{ padding: 20, width: '70%' }}>
                         <Text>Requests</Text>
-                        <Text style={{ marginTop: 10, fontSize: 50, fontWeight: "bold" }}>15</Text>
+                        <Text style={{ marginTop: 10, fontSize: 50, fontWeight: "bold" }}>{requests.length}</Text>
                     </View>
                     <View style={{ padding: 20, width: '30%', paddingTop: 45 }}>
                     <Ionicons name="git-pull-request-sharp" size={50} color="#7a7a7a" />
