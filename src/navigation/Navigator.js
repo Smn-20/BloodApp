@@ -10,14 +10,18 @@ import Register from '../screens/Register';
 import RecRegister from '../screens/RecRegister';
 import { AuthContext } from '../context/Context';
 import axios from 'axios';
-import  {Dashboard}  from '../screens/Dashboard';
+import { Dashboard } from '../screens/Dashboard';
 import Donors from '../screens/Donors';
 import Recipients from '../screens/Recipients';
-import  {RecDashboard}  from '../screens/RecDashboard';
+import { RecDashboard } from '../screens/RecDashboard';
 import Requests from '../screens/Requests';
 import Donate from '../screens/Donate';
 import { Donor } from '../screens/Donor';
 import Settings from '../screens/Settings';
+import RecRequests from '../screens/RecRequests';
+import SendRequest from '../screens/SendRequest';
+import RecDonation from '../screens/RecDonation';
+import DonationHistory from '../screens/DonationHistory';
 //SCREENS
 
 
@@ -31,6 +35,7 @@ const HomeStackNavigator = (props) => {
     const initialState = {
         isLoading: true,
         userToken: null,
+        user_id: null,
         redirect_page: '',
 
     }
@@ -41,6 +46,7 @@ const HomeStackNavigator = (props) => {
                 return {
                     ...prevState,
                     userToken: action.token,
+                    user_id: action.user_id,
                     redirect_page: action.redirect_page,
                     isLoading: false
                 };
@@ -48,6 +54,7 @@ const HomeStackNavigator = (props) => {
                 return {
                     ...prevState,
                     userToken: action.token,
+                    user_id: action.user_id,
                     redirect_page: action.redirect_page,
                     isLoading: false
                 };
@@ -55,6 +62,7 @@ const HomeStackNavigator = (props) => {
                 return {
                     ...prevState,
                     userToken: null,
+                    user_id: null,
                     redirect_page: null,
                     isLoading: false
                 };
@@ -76,7 +84,7 @@ const HomeStackNavigator = (props) => {
 
 
 
-            await axios.post("https://0315-41-186-143-119.eu.ngrok.io/user_login/", postObj)
+            await axios.post("https://687d-41-186-143-119.eu.ngrok.io/user_login/", postObj)
                 .then(res => {
 
                     if (res.data.status === 'success') {
@@ -84,6 +92,7 @@ const HomeStackNavigator = (props) => {
 
                         const items = [['userToken', res.data.token],
                         ['redirect_page', res.data.user_type],
+                        ['user_id', JSON.stringify(res.data.user_id)],
                         ]
                         AsyncStorage.multiSet(items, () => {
                             console.log('asyncstorage set successfully')
@@ -91,6 +100,7 @@ const HomeStackNavigator = (props) => {
                         dispatch({
                             type: 'LOGIN',
                             token: res.data.token,
+                            user_id: JSON.stringify(res.data.user_id),
                             redirect_page: res.data.user_type,
                         })
 
@@ -111,7 +121,7 @@ const HomeStackNavigator = (props) => {
         signOut: async () => {
 
             try {
-                await AsyncStorage.multiRemove(["userToken", "redirect_page"]);
+                await AsyncStorage.multiRemove(["userToken", "redirect_page", "user_id"]);
             } catch (error) {
                 console.log(error)
             }
@@ -124,21 +134,25 @@ const HomeStackNavigator = (props) => {
             // setIsLoading(false);
             let userToken;
             let redirect_page;
+            let user_id;
 
             userToken = null;
             redirect_page = null;
+            user_id = null;
 
 
             try {
                 //  await   AsyncStorage.multiRemove(["userToken", "userName", "email", "redirect_page","properties","tenant_info"]);
-                const data = await AsyncStorage.multiGet(["userToken", "redirect_page"]);
+                const data = await AsyncStorage.multiGet(["userToken", "redirect_page", "user_id"]);
                 const new_data = data.map(entry => entry[1]);
                 userToken = new_data[0]
                 redirect_page = new_data[1]
+                user_id = new_data[2]
 
                 dispatch({
                     type: 'RETRIEVE_TOKEN',
                     token: userToken,
+                    user_id: user_id,
                     redirect_page: redirect_page,
                 })
             } catch (error) {
@@ -171,7 +185,7 @@ const HomeStackNavigator = (props) => {
                             <Stack.Screen name="RecRegister" component={RecRegister} />
                             <Stack.Screen name="Requests" component={Requests} />
                             <Stack.Screen name="Donate" component={Donate} />
-                            <Stack.Screen name="Donor" component={Donor} />
+                            <Stack.Screen name="DonationHistory" component={DonationHistory} />
                             <Stack.Screen name="Settings" component={Settings} />
 
                         </Stack.Navigator>
@@ -186,12 +200,29 @@ const HomeStackNavigator = (props) => {
 
                             <Stack.Screen name="RecDashboard" component={RecDashboard} />
                             <Stack.Screen name="Settings" component={Settings} />
-                            {/* <Stack.Screen name="Donors" component={Donors} />
-                            <Stack.Screen name="Recipients" component={Recipients} />
-                            <Stack.Screen name="RecRegister" component={RecRegister} />
-                            <Stack.Screen name="Requests" component={Requests} />
-                            <Stack.Screen name="Donate" component={Donate} />
-                            <Stack.Screen name="Donor" component={Donor} /> */}
+                            <Stack.Screen name="RecRequests" component={RecRequests} />
+                            <Stack.Screen name="SendRequest" component={SendRequest} />
+                            <Stack.Screen name="RecDonation" component={RecDonation} />
+
+                            {/* MANAGER */}
+
+
+
+
+                        </Stack.Navigator>
+                    </AuthContext.Provider>
+
+                );
+            }
+
+            else if (loginState.redirect_page === 'Donor') {
+                return (
+                    <AuthContext.Provider value={authContext}>
+                        <Stack.Navigator screenOptions={screenOptionStyle} >
+
+                            <Stack.Screen name="Donor" component={Donor} />
+                            <Stack.Screen name="Settings" component={Settings} />
+
                             {/* MANAGER */}
 
 
