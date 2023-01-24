@@ -83,7 +83,7 @@ const Register = ({ navigation }) => {
                 "Content-Type": "multipart/form-data",
             };
 
-            axios.post('https://1de6-41-186-143-119.eu.ngrok.io/register/', postObj).then((res) => {
+            axios.post('https://54aa-41-186-194-186.eu.ngrok.io/register/', postObj).then((res) => {
                 if (res.data.code == 200) {
                     alert('Your are succesfully register Please login with you credentials')
                     navigation.navigate('Login')
@@ -111,14 +111,14 @@ const Register = ({ navigation }) => {
             <StatusBar barStyle='dark-content' backgroundColor="#000000" hidden={false} translucent={true} />
             <KeyboardAvoidingView style={styles.container} behavior='position'>
 
-                <View style={{ marginTop: 20, alignItems: "center", flexDirection: "row",backgroundColor:'red',paddingBottom:20 }}>
+                <View style={{ marginTop: 20, alignItems: "center", flexDirection: "row", backgroundColor: 'red', paddingBottom: 20 }}>
                     <TouchableOpacity style={{ width: "20%", alignItems: "flex-end", marginTop: 10, marginLeft: -20 }}
                         onPress={() => navigation.goBack()}>
-                            <Ionicons name="arrow-back" size={30} color="#fff" />
+                        <Ionicons name="arrow-back" size={30} color="#fff" />
                     </TouchableOpacity>
-                    
-                    <View style={{ width: "80%",alignItems:"center"}}>
-                        <Text style={{ fontWeight: "bold", marginTop: 10, fontSize: 20,color:'white' }}>Register as donor</Text>
+
+                    <View style={{ width: "80%", alignItems: "center" }}>
+                        <Text style={{ fontWeight: "bold", marginTop: 10, fontSize: 20, color: 'white' }}>Register as donor</Text>
                     </View>
                 </View>
 
@@ -205,26 +205,27 @@ const Register = ({ navigation }) => {
                             </Picker>
                         </View>
                     </View>
-                    <Text style={{ marginTop: 10,marginBottom:-80, fontSize: 14, marginLeft: 25 }}>Blood type</Text>
+                    <Text style={{ marginTop: 10, marginBottom: -80, fontSize: 14, marginLeft: 25 }}>Blood type</Text>
                     <View
-                            style={{
-                                marginTop: 0,
-                                borderColor: 'black',
-                                borderRadius: 10,
-                            }}>
-                            <Picker
-                                onValueChange={(val) => { setBtype(val) }}>
-                                <Picker.Item value="A+" label="A+" />
-                                <Picker.Item value="A-" label="A-" />
-                                <Picker.Item value="B+" label="B+" />
-                                <Picker.Item value="B-" label="B-" />
-                                <Picker.Item value="AB+" label="AB+" />
-                                <Picker.Item value="AB-" label="AB-" />
-                                <Picker.Item value="O+" label="O+" />
-                                <Picker.Item value="O-" label="O-" />
+                        style={{
+                            marginTop: 0,
+                            borderColor: 'black',
+                            borderRadius: 10,
+                        }}>
+                        <Picker
+                            selectedValue={Btype}
+                            onValueChange={(val) => { setBtype(val) }}>
+                            <Picker.Item value="A+" label="A+" />
+                            <Picker.Item value="A-" label="A-" />
+                            <Picker.Item value="B+" label="B+" />
+                            <Picker.Item value="B-" label="B-" />
+                            <Picker.Item value="AB+" label="AB+" />
+                            <Picker.Item value="AB-" label="AB-" />
+                            <Picker.Item value="O+" label="O+" />
+                            <Picker.Item value="O-" label="O-" />
 
-                            </Picker>
-                        </View>
+                        </Picker>
+                    </View>
                     <View style={styles.Formcontainer}>
                         <TextInput
                             placeholder="Where do you live"

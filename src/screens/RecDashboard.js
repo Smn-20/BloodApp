@@ -22,9 +22,13 @@ export const RecDashboard = ({navigation}) => {
                             <Ionicons name="menu" size={30} color="#fff" />
                     </TouchableOpacity>
                     
-                    <View style={{ width: "85%",alignItems:"center"}}>
+                    <View style={{ width: "75%",alignItems:"center"}}>
                         <Text style={{ fontWeight: "bold", marginTop: 10, fontSize: 20,color:'white' }}>Dashboard</Text>
                     </View>
+                    <TouchableOpacity style={{ width: "10%", justifyContent: "flex-start", marginTop: 10 }}
+                        onPress={() => navigation.navigate('Settings')}>
+                           <FontAwesome name="user-circle-o" size={30} color="#fff" />
+                    </TouchableOpacity>
         </View>
 
         <View style={{flexDirection:'row',justifyContent:'space-around'}}>
@@ -35,7 +39,7 @@ export const RecDashboard = ({navigation}) => {
                         <Text style={{marginTop:25,fontSize:50,fontWeight: "bold"}}>3</Text>
                     </View>
                     <View style={{padding:20,width:'30%',paddingTop:65}}>
-                    <FontAwesome5 name="hand-paper" size={50} color="#7a7a7a" />
+                    <Ionicons name="git-pull-request-sharp" size={50} color="#7a7a7a" />
                     </View>
                 </TouchableOpacity>
                 
